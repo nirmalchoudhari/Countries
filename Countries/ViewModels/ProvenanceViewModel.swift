@@ -11,6 +11,7 @@ final class ProvenanceViewModel {
     
     private(set) lazy var provenances = [Provenance]()
     private lazy var urlSessionService = URLSessionService()
+    var country: Country?
     
     func fetchProvenances(for countryId: Int, completion: @escaping () -> Void) {
         APIService(with: urlSessionService).fetchProvenance(for: countryId) { [weak self] provenances in
@@ -22,5 +23,13 @@ final class ProvenanceViewModel {
         }
     }
     
+    func numberOfRows() -> Int {
+        return provenances.count
+    }
+    
+    func getProvenance(_ index: Int) -> Provenance? {
+        guard provenances.count > index else { return nil }
+        return provenances[index]
+    }
     
 }

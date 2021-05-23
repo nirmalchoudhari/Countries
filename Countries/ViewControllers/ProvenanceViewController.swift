@@ -9,21 +9,51 @@ import UIKit
 
 class ProvenanceViewController: UIViewController {
 
+    @IBOutlet private var tableView: UITableView!
+    private lazy var provenanceViewModel = ProvenanceViewModel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        configure()
+        
+        guard let country = provenanceViewModel.country else { return }
+        provenanceViewModel.fetchProvenances(for: country.id) {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
-    */
+    
+    func configure() {
+        tableView.register(ProvenanceTableViewCell.nib(), forCellReuseIdentifier: ProvenanceTableViewCell.identifier)
+    }
+    
+    func setCountry(_ country: Country) {
+        provenanceViewModel.country = country
+    }
+}
 
+extension ProvenanceViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return provenanceViewModel.numberOfRows()
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProvenanceTableViewCell.identifier, for: indexPath) as? ProvenanceTableViewCell else {
+            return ProvenanceTableViewCell.init(style: .default, reuseIdentifier: ProvenanceTableViewCell.identifier)
+        }
+        
+        let provenance = provenanceViewModel.getProvenance(indexPath.row)
+        cell.configure(provenance)
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+    }
 }

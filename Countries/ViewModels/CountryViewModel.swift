@@ -21,4 +21,13 @@ final class CountryViewModel {
             }
         }
     }
+    
+    func numberOfRows() -> Int {
+        return countries.count
+    }
+    
+    func getCountry(_ index: Int) -> Country? {
+        guard countries.count > index else { return nil }
+        return countries[index]
+    }
 }

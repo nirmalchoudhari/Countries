@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,6 +22,11 @@
 		ECBA6AB526596DE300851281 /* CountryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6AB426596DE300851281 /* CountryViewModel.swift */; };
 		ECBA6ABA2659791700851281 /* URLSessionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6AB92659791700851281 /* URLSessionService.swift */; };
 		ECBA6ACB265A39E100851281 /* CountriesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6A5126596B3F00851281 /* CountriesListViewController.swift */; };
+		ECBA6AD8265A41DA00851281 /* CountryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECBA6AD6265A41DA00851281 /* CountryTableViewCell.swift */; };
+		ECBA6AD9265A41DA00851281 /* CountryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECBA6AD7265A41DA00851281 /* CountryTableViewCell.xib */; };
+		ECF3E357265A570F00ECDABF /* ProvenanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E355265A570F00ECDABF /* ProvenanceTableViewCell.swift */; };
+		ECF3E358265A570F00ECDABF /* ProvenanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */; };
+		ECF3E35E265A603C00ECDABF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = ECF3E35D265A603C00ECDABF /* SDWebImage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +68,10 @@
 		ECBA6AAF26596DCE00851281 /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		ECBA6AB426596DE300851281 /* CountryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewModel.swift; sourceTree = "<group>"; };
 		ECBA6AB92659791700851281 /* URLSessionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionService.swift; sourceTree = "<group>"; };
+		ECBA6AD6265A41DA00851281 /* CountryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryTableViewCell.swift; sourceTree = "<group>"; };
+		ECBA6AD7265A41DA00851281 /* CountryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTableViewCell.xib; sourceTree = "<group>"; };
+		ECF3E355265A570F00ECDABF /* ProvenanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceTableViewCell.swift; sourceTree = "<group>"; };
+		ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProvenanceTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECF3E35E265A603C00ECDABF /* SDWebImage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,6 +125,7 @@
 			children = (
 				ECBA6A8026596B7D00851281 /* App */,
 				ECBA6A8E26596C6300851281 /* Models */,
+				ECBA6AD2265A417200851281 /* Views */,
 				ECBA6A8126596B9200851281 /* ViewControllers */,
 				ECBA6A8D26596C5A00851281 /* ViewModels */,
 				ECBA6A8226596B9F00851281 /* Storyboards */,
@@ -213,6 +224,33 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		ECBA6AD2265A417200851281 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ECF3E354265A56B400ECDABF /* ProvenanceTableViewCell */,
+				ECBA6ADD265A41E200851281 /* CountryTableViewCell */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		ECBA6ADD265A41E200851281 /* CountryTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ECBA6AD6265A41DA00851281 /* CountryTableViewCell.swift */,
+				ECBA6AD7265A41DA00851281 /* CountryTableViewCell.xib */,
+			);
+			path = CountryTableViewCell;
+			sourceTree = "<group>";
+		};
+		ECF3E354265A56B400ECDABF /* ProvenanceTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				ECF3E355265A570F00ECDABF /* ProvenanceTableViewCell.swift */,
+				ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */,
+			);
+			path = ProvenanceTableViewCell;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -229,6 +267,9 @@
 			dependencies = (
 			);
 			name = Countries;
+			packageProductDependencies = (
+				ECF3E35D265A603C00ECDABF /* SDWebImage */,
+			);
 			productName = Countries;
 			productReference = ECBA6A4A26596B3F00851281 /* Countries.app */;
 			productType = "com.apple.product-type.application";
@@ -300,6 +341,9 @@
 				Base,
 			);
 			mainGroup = ECBA6A4126596B3F00851281;
+			packageReferences = (
+				ECF3E35C265A603C00ECDABF /* XCRemoteSwiftPackageReference "SDWebImage" */,
+			);
 			productRefGroup = ECBA6A4B26596B3F00851281 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -316,7 +360,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ECBA6AD9265A41DA00851281 /* CountryTableViewCell.xib in Resources */,
 				ECBA6A5A26596B4000851281 /* LaunchScreen.storyboard in Resources */,
+				ECF3E358265A570F00ECDABF /* ProvenanceTableViewCell.xib in Resources */,
 				ECBA6A5726596B4000851281 /* Assets.xcassets in Resources */,
 				ECBA6A5526596B3F00851281 /* Main.storyboard in Resources */,
 			);
@@ -346,6 +392,8 @@
 				ECBA6ACB265A39E100851281 /* CountriesListViewController.swift in Sources */,
 				ECBA6A4E26596B3F00851281 /* AppDelegate.swift in Sources */,
 				ECBA6AA626596DB600851281 /* ProvenanceViewModel.swift in Sources */,
+				ECBA6AD8265A41DA00851281 /* CountryTableViewCell.swift in Sources */,
+				ECF3E357265A570F00ECDABF /* ProvenanceTableViewCell.swift in Sources */,
 				ECBA6AA126596D6A00851281 /* APIService.swift in Sources */,
 				ECBA6ABA2659791700851281 /* URLSessionService.swift in Sources */,
 				ECBA6AB526596DE300851281 /* CountryViewModel.swift in Sources */,
@@ -679,6 +727,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		ECF3E35C265A603C00ECDABF /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.11.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		ECF3E35D265A603C00ECDABF /* SDWebImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = ECF3E35C265A603C00ECDABF /* XCRemoteSwiftPackageReference "SDWebImage" */;
+			productName = SDWebImage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = ECBA6A4226596B3F00851281 /* Project object */;
 }
