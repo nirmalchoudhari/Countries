@@ -10,8 +10,10 @@ import Foundation
 final class CountryViewModel {
     
     private(set) lazy var countries = [Country]()
-    private lazy var urlSessionService = URLSessionService()
+    private lazy var filteredCountries = [Country]()
     
+    private lazy var urlSessionService = URLSessionService()
+
     func fetchCountries(_ completion: @escaping () -> Void) {
         APIService(with: urlSessionService).fetchCountries { [weak self] countries in
             guard let result = countries.result else { return }
@@ -22,12 +24,26 @@ final class CountryViewModel {
         }
     }
     
-    func numberOfRows() -> Int {
-        return countries.count
+    func filterCountries(_ searchText: String) {
+        filteredCountries = countries.filter{$0.name.lowercased().starts(with: searchText.lowercased())}
     }
     
-    func getCountry(_ index: Int) -> Country? {
+    func numberOfRows(_ mode: CountryListMode) -> Int {
+        switch mode {
+        case .complete:
+            return countries.count
+        case .filtered:
+            return filteredCountries.count
+        }
+    }
+    
+    func getCountry(_ index: Int, mode: CountryListMode) -> Country? {
         guard countries.count > index else { return nil }
-        return countries[index]
+        switch mode {
+        case .complete:
+            return countries[index]
+        case .filtered:
+            return filteredCountries[index]
+        }
     }
 }

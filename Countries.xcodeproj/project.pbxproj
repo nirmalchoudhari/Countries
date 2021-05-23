@@ -27,6 +27,8 @@
 		ECF3E357265A570F00ECDABF /* ProvenanceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E355265A570F00ECDABF /* ProvenanceTableViewCell.swift */; };
 		ECF3E358265A570F00ECDABF /* ProvenanceTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */; };
 		ECF3E35E265A603C00ECDABF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = ECF3E35D265A603C00ECDABF /* SDWebImage */; };
+		ECF3E363265AB08100ECDABF /* UIViewController+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */; };
+		ECF3E368265AB47C00ECDABF /* UIView+SubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		ECBA6AD7265A41DA00851281 /* CountryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountryTableViewCell.xib; sourceTree = "<group>"; };
 		ECF3E355265A570F00ECDABF /* ProvenanceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProvenanceTableViewCell.swift; sourceTree = "<group>"; };
 		ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProvenanceTableViewCell.xib; sourceTree = "<group>"; };
+		ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActivityIndicator.swift"; sourceTree = "<group>"; };
+		ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SubViews.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +224,8 @@
 		ECBA6A9026596C7A00851281 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */,
+				ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -398,6 +404,8 @@
 				ECBA6ABA2659791700851281 /* URLSessionService.swift in Sources */,
 				ECBA6AB526596DE300851281 /* CountryViewModel.swift in Sources */,
 				ECBA6A9C26596D5400851281 /* ProvenanceViewController.swift in Sources */,
+				ECF3E363265AB08100ECDABF /* UIViewController+ActivityIndicator.swift in Sources */,
+				ECF3E368265AB47C00ECDABF /* UIView+SubViews.swift in Sources */,
 				ECBA6AB026596DCE00851281 /* Country.swift in Sources */,
 				ECBA6AAB26596DC200851281 /* Provenance.swift in Sources */,
 				ECBA6A5026596B3F00851281 /* SceneDelegate.swift in Sources */,
@@ -506,7 +514,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -561,7 +569,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
