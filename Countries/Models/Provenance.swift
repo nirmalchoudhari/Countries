@@ -7,18 +7,12 @@
 
 import Foundation
 
+/// Model for Provenance
 struct Provenance: Codable {
     var id: Int
     var countryCode: String
     var code: String
     var name: String
-    
-    init(id: Int, countryCode: String, code: String, name: String) {
-        self.id = id
-        self.countryCode = countryCode
-        self.code = code
-        self.name = name
-    }
     
     enum CodingKeys: String, CodingKey {
         case id = "ID"

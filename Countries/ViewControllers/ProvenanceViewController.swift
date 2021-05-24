@@ -9,21 +9,26 @@ import UIKit
 import CoreLocation
 import MapKit
 
+/// Defines the state of the ProvenanceViewController at given point
 enum ProvenanceViewControllerState {
     case idle
     case loading
 }
 
-class ProvenanceViewController: UIViewController {
+class ProvenanceViewController: UIViewController, Identifiable {
+
+    static let identifier = "ProvenanceViewController"
 
     @IBOutlet private var tableView: UITableView!
     @IBOutlet private var mapView: MKMapView!
     private lazy var provenanceViewModel = ProvenanceViewModel()
+    
     private var state: ProvenanceViewControllerState? {
         didSet {
             updateUI()
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
@@ -36,13 +41,16 @@ class ProvenanceViewController: UIViewController {
     }
 }
 
+// MARK:- Private functions
 private extension ProvenanceViewController {
     
+    /// Configures intial Views
     func configure() {
-        title = "Provenances"
+        title = Constants.provenanceTitle
         tableView.register(ProvenanceTableViewCell.nib(), forCellReuseIdentifier: ProvenanceTableViewCell.identifier)
     }
     
+    /// Updates view based on the state of view at given point
     func updateUI() {
         guard let state = state else { return }
         switch state {
@@ -60,18 +68,20 @@ private extension ProvenanceViewController {
         tableView.reloadData()
     }
     
+    /// Shows No data error label if needed based on the provenance from Viewmodel
     func showNoDataErrorIfNeeded() {
         guard provenanceViewModel.noProvenance else {
             return
         }
         let errorLabel = UILabel(frame: tableView.bounds)
-        errorLabel.text = "No Data Available"
+        errorLabel.text = Constants.noDataAvaialble
         errorLabel.textAlignment = .center
         tableView.separatorStyle = .none
         tableView.backgroundView = errorLabel
         
     }
-
+    
+    /// Initiate the fetch request for Provienence
     func fetchProvenance() {
         guard let country = provenanceViewModel.country else { return }
         state = .loading
@@ -85,6 +95,8 @@ private extension ProvenanceViewController {
         }
     }
     
+    /// Updates the map view based on the current country and Provenance if provided
+    /// - Parameter provenance: provenance optional, disaply and focus on country if no provenance provided
     func updateMapView(_ provenance: Provenance? = nil) {
         guard let country = provenanceViewModel.country else { return }
         var address = country.name
@@ -103,6 +115,7 @@ private extension ProvenanceViewController {
     }
 }
 
+// MARK:- UITableViewDataSource and UITableViewDelegate
 extension ProvenanceViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return provenanceViewModel.numberOfRows()

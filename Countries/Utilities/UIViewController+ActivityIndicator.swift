@@ -8,7 +8,10 @@
 import UIKit
 
 typealias ActionIdentifier = String
+
 extension UIViewController {
+    
+    /// Shows activity indicator at the center of the view of viewcontroller
     func showActivityIndicator() {
         view.isUserInteractionEnabled = false
         let allActivityIndicators = view.allSubViews(UIActivityIndicatorView.self)
@@ -34,6 +37,7 @@ extension UIViewController {
         activityIndicator.startAnimating()
     }
     
+    /// Stops and hides the current active activity indicator
     func hideActivityIndicator() {
         view.isUserInteractionEnabled = true
         guard let activityIndicator = view.allSubViews(UIActivityIndicatorView.self).first else {

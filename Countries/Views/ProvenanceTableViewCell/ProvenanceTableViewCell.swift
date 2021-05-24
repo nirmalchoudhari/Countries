@@ -7,12 +7,15 @@
 
 import UIKit
 
-class ProvenanceTableViewCell: UITableViewCell, Identifiable {
+/// UITableViewCell for Provenance
+class ProvenanceTableViewCell: UITableViewCell, Identifiable, NibIdentifiable {
 
     static let identifier = "ProvenanceTableViewCell"
     
     @IBOutlet private var nameLabel: UILabel!
     
+    /// Configure Cell based on the model object
+    /// - Parameter item: Country Object
     func configure(_ item: Provenance?) {
         nameLabel.text = item?.name
     }

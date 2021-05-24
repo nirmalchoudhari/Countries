@@ -7,11 +7,13 @@
 
 import UIKit
 
+/// Defines the mode of the Country List.
 enum CountryListMode {
     case filtered
     case complete
 }
 
+/// Defines the state of the CountryViewController at given point
 enum CountriesListViewControllerState {
     case idle
     case refeshing
@@ -43,16 +45,19 @@ class CountriesListViewController: UIViewController {
     }
 }
 
+// MARK:- Private Functions
+
 private extension CountriesListViewController {
     
+    /// Configure the initial state of UI components
     func configure() {
-        title = "Countries"
+        title = Constants.countriesTitle
         tableView.register(CountryTableViewCell.nib(), forCellReuseIdentifier: CountryTableViewCell.identifier)
         
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
         searchController.searchBar.sizeToFit()
-        searchController.searchBar.placeholder = "Search Countries"
+        searchController.searchBar.placeholder = Constants.searchbarPlaceholder
         searchController.obscuresBackgroundDuringPresentation = false
         tableView.tableHeaderView = searchController.searchBar
         
@@ -63,6 +68,7 @@ private extension CountriesListViewController {
         
     }
     
+    /// Upodates the View base don the state of the View
     func updateUI() {
         guard let state = state else { return }
         switch state {
@@ -79,6 +85,7 @@ private extension CountriesListViewController {
         tableView.reloadData()
     }
     
+    /// Initiate a request for fetaching countries
     func fetchCountries() {
         state = refreshControl.isRefreshing ? .refeshing : .loading
         countryViewModel.fetchCountries { [weak self] _, errorDescription in
@@ -96,9 +103,12 @@ private extension CountriesListViewController {
         fetchCountries()
     }
     
+    /// Redirect  to the ProvenanceViewController to show provenance for given country
+    /// - Parameter country: Country for which provenance will be loaded
     func showProvenances(_ country: Country?) {
+        self.searchController.isActive = false
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let provenanceViewController = storyboard.instantiateViewController(withIdentifier: "ProvenanceViewController") as? ProvenanceViewController,
+        guard let provenanceViewController = storyboard.instantiateViewController(withIdentifier: ProvenanceViewController.identifier) as? ProvenanceViewController,
               let country = country else {
             return
         }
@@ -108,7 +118,10 @@ private extension CountriesListViewController {
     
 }
 
+//MARK:- UITableViewDataSource and UITableViewDelegate
+
 extension CountriesListViewController: UITableViewDataSource, UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryViewModel.numberOfRows(listMode)
     }
@@ -128,11 +141,9 @@ extension CountriesListViewController: UITableViewDataSource, UITableViewDelegat
     }
 }
 
-extension CountriesListViewController: UISearchBarDelegate {
+//MARK:- UISearchBar Delegate
 
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        listMode = .filtered
-    }
+extension CountriesListViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         listMode = .complete
