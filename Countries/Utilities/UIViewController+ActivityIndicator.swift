@@ -7,6 +7,7 @@
 
 import UIKit
 
+typealias ActionIdentifier = String
 extension UIViewController {
     func showActivityIndicator() {
         view.isUserInteractionEnabled = false
@@ -40,5 +41,4 @@ extension UIViewController {
         }
         activityIndicator.stopAnimating()
     }
-    
 }

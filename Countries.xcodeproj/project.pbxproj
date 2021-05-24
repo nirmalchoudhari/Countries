@@ -29,6 +29,9 @@
 		ECF3E35E265A603C00ECDABF /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = ECF3E35D265A603C00ECDABF /* SDWebImage */; };
 		ECF3E363265AB08100ECDABF /* UIViewController+ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */; };
 		ECF3E368265AB47C00ECDABF /* UIView+SubViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */; };
+		ECF3E37E265ADE5300ECDABF /* UIViewController+AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E37D265ADE5300ECDABF /* UIViewController+AlertController.swift */; };
+		ECF3E383265B843300ECDABF /* ResponseParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E382265B843300ECDABF /* ResponseParser.swift */; };
+		ECF3E388265B848600ECDABF /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF3E387265B848600ECDABF /* RequestType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +79,9 @@
 		ECF3E356265A570F00ECDABF /* ProvenanceTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProvenanceTableViewCell.xib; sourceTree = "<group>"; };
 		ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+ActivityIndicator.swift"; sourceTree = "<group>"; };
 		ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+SubViews.swift"; sourceTree = "<group>"; };
+		ECF3E37D265ADE5300ECDABF /* UIViewController+AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+AlertController.swift"; sourceTree = "<group>"; };
+		ECF3E382265B843300ECDABF /* ResponseParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseParser.swift; sourceTree = "<group>"; };
+		ECF3E387265B848600ECDABF /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +223,7 @@
 			children = (
 				ECBA6AA026596D6A00851281 /* APIService.swift */,
 				ECBA6AB92659791700851281 /* URLSessionService.swift */,
+				ECF3E382265B843300ECDABF /* ResponseParser.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -226,6 +233,8 @@
 			children = (
 				ECF3E362265AB08100ECDABF /* UIViewController+ActivityIndicator.swift */,
 				ECF3E367265AB47C00ECDABF /* UIView+SubViews.swift */,
+				ECF3E37D265ADE5300ECDABF /* UIViewController+AlertController.swift */,
+				ECF3E387265B848600ECDABF /* RequestType.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -396,6 +405,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ECBA6ACB265A39E100851281 /* CountriesListViewController.swift in Sources */,
+				ECF3E37E265ADE5300ECDABF /* UIViewController+AlertController.swift in Sources */,
 				ECBA6A4E26596B3F00851281 /* AppDelegate.swift in Sources */,
 				ECBA6AA626596DB600851281 /* ProvenanceViewModel.swift in Sources */,
 				ECBA6AD8265A41DA00851281 /* CountryTableViewCell.swift in Sources */,
@@ -404,7 +414,9 @@
 				ECBA6ABA2659791700851281 /* URLSessionService.swift in Sources */,
 				ECBA6AB526596DE300851281 /* CountryViewModel.swift in Sources */,
 				ECBA6A9C26596D5400851281 /* ProvenanceViewController.swift in Sources */,
+				ECF3E388265B848600ECDABF /* RequestType.swift in Sources */,
 				ECF3E363265AB08100ECDABF /* UIViewController+ActivityIndicator.swift in Sources */,
+				ECF3E383265B843300ECDABF /* ResponseParser.swift in Sources */,
 				ECF3E368265AB47C00ECDABF /* UIView+SubViews.swift in Sources */,
 				ECBA6AB026596DCE00851281 /* Country.swift in Sources */,
 				ECBA6AAB26596DC200851281 /* Provenance.swift in Sources */,

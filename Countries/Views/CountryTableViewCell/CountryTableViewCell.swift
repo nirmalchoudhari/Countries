@@ -8,20 +8,17 @@
 import UIKit
 import SDWebImage
 
-class CountryTableViewCell: UITableViewCell {
+protocol Identifiable {
+    static var identifier: String {get}
+    static func nib() -> UINib
+}
+
+class CountryTableViewCell: UITableViewCell, Identifiable {
     
     static let identifier = "CountryTableViewCell"
     
     @IBOutlet private var flagImageView: UIImageView!
     @IBOutlet private var nameLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     func configure(_ item: Country?) {
         nameLabel.text = item?.name

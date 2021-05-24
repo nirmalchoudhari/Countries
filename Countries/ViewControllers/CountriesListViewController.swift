@@ -25,7 +25,11 @@ class CountriesListViewController: UIViewController {
     private var refreshControl: UIRefreshControl!
     
     private lazy var countryViewModel = CountryViewModel()
-    private var listMode = CountryListMode.complete
+    private var listMode = CountryListMode.complete {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     private var state: CountriesListViewControllerState? {
         didSet {
             updateUI()
@@ -35,15 +39,17 @@ class CountriesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-        loadCountries()
+        fetchCountries()
     }
+}
+
+private extension CountriesListViewController {
     
     func configure() {
         title = "Countries"
         tableView.register(CountryTableViewCell.nib(), forCellReuseIdentifier: CountryTableViewCell.identifier)
         
         searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.sizeToFit()
         searchController.searchBar.placeholder = "Search Countries"
@@ -55,18 +61,6 @@ class CountriesListViewController: UIViewController {
         tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshData), for: .valueChanged)
         
-    }
-    
-    func loadCountries() {
-        state = refreshControl.isRefreshing ? .refeshing : .loading
-        countryViewModel.fetchCountries { [weak self] in
-            self?.state = .idle
-        }
-    }
-    
-    @objc func refreshData() {
-        listMode = .complete
-        loadCountries()
     }
     
     func updateUI() {
@@ -84,6 +78,34 @@ class CountriesListViewController: UIViewController {
         }
         tableView.reloadData()
     }
+    
+    func fetchCountries() {
+        state = refreshControl.isRefreshing ? .refeshing : .loading
+        countryViewModel.fetchCountries { [weak self] _, errorDescription in
+            self?.state = .idle
+            if let message = errorDescription {
+                self?.showRetryAlert(message: message, completion: {
+                    self?.fetchCountries()
+                })
+            }
+        }
+    }
+    
+    @objc func refreshData() {
+        listMode = .complete
+        fetchCountries()
+    }
+    
+    func showProvenances(_ country: Country?) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let provenanceViewController = storyboard.instantiateViewController(withIdentifier: "ProvenanceViewController") as? ProvenanceViewController,
+              let country = country else {
+            return
+        }
+        provenanceViewController.setCountry(country)
+        navigationController?.pushViewController(provenanceViewController, animated: true)
+    }
+    
 }
 
 extension CountriesListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -101,39 +123,24 @@ extension CountriesListViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let provenanceViewController = storyboard.instantiateViewController(withIdentifier: "ProvenanceViewController") as? ProvenanceViewController,
-              let country = countryViewModel.getCountry(indexPath.row, mode: listMode) else {
-            return
-        }
-        provenanceViewController.setCountry(country)
-        navigationController?.pushViewController(provenanceViewController, animated: true)
+        let country = countryViewModel.getCountry(indexPath.row, mode: listMode)
+        showProvenances(country)
     }
 }
 
-extension CountriesListViewController: UISearchBarDelegate, UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let searchText = searchController.searchBar.text else {
-            return
-        }
-        countryViewModel.filterCountries(searchText)
-        tableView.reloadData()
-    }
-    
+extension CountriesListViewController: UISearchBarDelegate {
+
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         listMode = .filtered
-        tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         listMode = .complete
-        tableView.reloadData()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if listMode != .filtered {
             listMode = .filtered
-            tableView.reloadData()
         }
         searchController.searchBar.resignFirstResponder()
     }
@@ -143,8 +150,7 @@ extension CountriesListViewController: UISearchBarDelegate, UISearchResultsUpdat
             listMode = .complete
             return
         }
-        listMode = .filtered
         countryViewModel.filterCountries(searchText)
-        tableView.reloadData()
+        listMode = .filtered
     }
 }

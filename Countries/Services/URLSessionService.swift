@@ -8,21 +8,8 @@
 import Foundation
 
 protocol NetworkService {
+    func execute(_ requestType: RequestType, responseQueue: DispatchQueue, completion: @escaping (APIResponse) -> Void)
     func execute(_ requestType: RequestType, completion: @escaping (APIResponse) -> Void)
-}
-
-enum RequestType {
-    case counties
-    case provenance(Int)
-    
-    var urlString: String {
-        switch self {
-        case .counties:
-            return "https://connect.mindbodyonline.com/rest/worldregions/country"
-        case .provenance(let id):
-            return "https://connect.mindbodyonline.com/rest/worldregions/country/" + String(id) + "/province"
-        }
-    }
 }
 
 struct APIResponse {
@@ -36,6 +23,10 @@ final class URLSessionService: NetworkService {
     var dataTask: URLSessionDataTask?
     
     func execute(_ requestType: RequestType, completion: @escaping (APIResponse) -> Void) {
+        execute(requestType, responseQueue: .main, completion: completion)
+    }
+    
+    func execute(_ requestType: RequestType, responseQueue: DispatchQueue, completion: @escaping (APIResponse) -> Void) {
         dataTask?.cancel()
         guard let url = URL(string: requestType.urlString) else { return }
         
@@ -44,12 +35,11 @@ final class URLSessionService: NetworkService {
                 self?.dataTask = nil
             }
             let apiResponse = APIResponse(data: data, error: error)
-            completion(apiResponse)
+            responseQueue.async {
+                completion(apiResponse)
+            }
         })
         
         dataTask?.resume()
     }
-    
-    
-    
 }

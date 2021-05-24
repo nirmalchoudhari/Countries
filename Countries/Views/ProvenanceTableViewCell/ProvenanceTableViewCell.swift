@@ -7,19 +7,11 @@
 
 import UIKit
 
-class ProvenanceTableViewCell: UITableViewCell {
+class ProvenanceTableViewCell: UITableViewCell, Identifiable {
 
     static let identifier = "ProvenanceTableViewCell"
     
     @IBOutlet private var nameLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
     
     func configure(_ item: Provenance?) {
         nameLabel.text = item?.name

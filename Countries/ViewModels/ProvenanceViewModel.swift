@@ -13,12 +13,18 @@ final class ProvenanceViewModel {
     private lazy var urlSessionService = URLSessionService()
     var country: Country?
     
-    func fetchProvenances(for countryId: Int, completion: @escaping () -> Void) {
-        APIService(with: urlSessionService).fetchProvenance(for: countryId) { [weak self] provenances in
-            guard let result = provenances.result else { return }
-            self?.provenances = result
-            DispatchQueue.main.async {
-                completion()
+    var noProvenance: Bool {
+        return provenances.isEmpty
+    }
+    
+    func fetchProvenances(for countryId: Int, completion: @escaping ([Provenance]?, ErrorDescription?) -> Void) {
+        APIService(with: urlSessionService).fetchProvenance(for: countryId) { [weak self] response in
+            switch response {
+            case .result(let provenances):
+                self?.provenances = provenances
+                completion(provenances, nil)
+            case .error(let error):
+                completion(nil, error.localizedDescription)
             }
         }
     }

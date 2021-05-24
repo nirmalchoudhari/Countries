@@ -27,8 +27,16 @@ class ProvenanceViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+        updateMapView()
         fetchProvenance()
     }
+    
+    func setCountry(_ country: Country) {
+        provenanceViewModel.country = country
+    }
+}
+
+private extension ProvenanceViewController {
     
     func configure() {
         title = "Provenances"
@@ -43,6 +51,7 @@ class ProvenanceViewController: UIViewController {
             mapView.isHidden = false
             hideActivityIndicator()
             updateMapView()
+            showNoDataErrorIfNeeded()
         case .loading:
             tableView.isHidden = true
             mapView.isHidden = true
@@ -51,16 +60,29 @@ class ProvenanceViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func showNoDataErrorIfNeeded() {
+        guard provenanceViewModel.noProvenance else {
+            return
+        }
+        let errorLabel = UILabel(frame: tableView.bounds)
+        errorLabel.text = "No Data Available"
+        errorLabel.textAlignment = .center
+        tableView.separatorStyle = .none
+        tableView.backgroundView = errorLabel
+        
+    }
+
     func fetchProvenance() {
         guard let country = provenanceViewModel.country else { return }
         state = .loading
-        provenanceViewModel.fetchProvenances(for: country.id) { [weak self] in
+        provenanceViewModel.fetchProvenances(for: country.id) { [weak self] _, errorDescription in
             self?.state = .idle
+            if let message = errorDescription {
+                self?.showRetryAlert(message: message, completion: {
+                    self?.fetchProvenance()
+                })
+            }
         }
-    }
-    
-    func setCountry(_ country: Country) {
-        provenanceViewModel.country = country
     }
     
     func updateMapView(_ provenance: Provenance? = nil) {
@@ -102,13 +124,4 @@ extension ProvenanceViewController: UITableViewDataSource, UITableViewDelegate {
         updateMapView(provenance)
     }
 
-}
-
-extension MKCoordinateRegion {
-    public var mapRect: MKMapRect {
-        let topLeft = MKMapPoint(CLLocationCoordinate2D(latitude: center.latitude + span.latitudeDelta/2, longitude: center.longitude - span.longitudeDelta/2))
-        let bottomRight = MKMapPoint(CLLocationCoordinate2D(latitude: center.latitude - span.latitudeDelta/2, longitude: center.longitude + span.longitudeDelta/2))
-        return MKMapRect(origin: MKMapPoint(x: min(topLeft.x, bottomRight.x), y: min(topLeft.y, bottomRight.y)),
-                         size: MKMapSize(width: fabs(topLeft.x-bottomRight.x), height: fabs(topLeft.y-bottomRight.x)))
-    }
 }

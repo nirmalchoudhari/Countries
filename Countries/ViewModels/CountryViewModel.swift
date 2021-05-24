@@ -7,6 +7,8 @@
 
 import Foundation
 
+typealias ErrorDescription = String
+
 final class CountryViewModel {
     
     private(set) lazy var countries = [Country]()
@@ -14,12 +16,14 @@ final class CountryViewModel {
     
     private lazy var urlSessionService = URLSessionService()
 
-    func fetchCountries(_ completion: @escaping () -> Void) {
-        APIService(with: urlSessionService).fetchCountries { [weak self] countries in
-            guard let result = countries.result else { return }
-            self?.countries = result
-            DispatchQueue.main.async {
-                completion()
+    func fetchCountries(_ completion: @escaping ([Country]?, ErrorDescription?) -> Void) {
+        APIService(with: urlSessionService).fetchCountries { [weak self] response in
+            switch response {
+            case .result(let countries):
+                self?.countries = countries
+                completion(countries, nil)
+            case .error(let e):
+                completion(nil, e.errorDescription)
             }
         }
     }
