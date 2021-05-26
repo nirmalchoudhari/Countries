@@ -112,6 +112,9 @@ private extension CountriesListViewController {
               let country = country else {
             return
         }
+        if listMode == .filtered {
+            listMode = .complete
+        }
         provenanceViewController.setCountry(country)
         navigationController?.pushViewController(provenanceViewController, animated: true)
     }
